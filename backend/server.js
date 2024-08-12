@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import { connectDB } from './Config/db.js';
+import foodRouter from './Routes/foodRoute.js';
 
 
 // app configuration
@@ -14,9 +15,11 @@ app.use(cors());
 //DB connection
  connectDB();
 
-app.get('/', (req,res)=>{
-    res.send("API is running");
-})
+ // api endpoints
+
+ app.use('/api/food', foodRouter);
+ app.use('/images', express.static('uploads'));
+
 
 app.listen(port, ()=>{
     if(connectDB()){
