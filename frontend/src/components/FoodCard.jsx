@@ -12,13 +12,13 @@ const FoodCard = ({
 }) => {
 
      
-    const {addToCart, cardItems, removeFromCart} =useContext(StoreContext);
+    const {addToCart, cardItems, removeFromCart,url} =useContext(StoreContext);
 
 
     return (
         <div className={`foot-item w-[13.5rem] mb-8 hover:scale-105 transition-all duration-500  shadow-lg animate-fadeIn`}>
             <div className='img-container rounded-md overflow-hidden relative'>
-                <img src={image} />
+                <img src={url+"/images/"+image} />
                 {!cardItems[id] ?
                     <img className='absolute bottom-3 right-3 cursor-pointer' onClick={() => addToCart(id) } src={assets.add_icon_white} width={30} /> :
                     <div className='w-fit bg-black/65  rounded-full p-1 flex items-center justify-end mt-1 absolute bottom-3 right-3 cursor-pointer'>

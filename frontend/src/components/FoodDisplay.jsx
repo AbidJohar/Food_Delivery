@@ -6,6 +6,8 @@ const FoodDisplay = ({ category }) => {
 
   const { food_list } = useContext(StoreContext);
 
+   
+
 
   return (
     <div className=' mx-20'>
