@@ -6,7 +6,7 @@ import { useNavigate} from 'react-router-dom';
 
 const Cart = () => {
   const navigate = useNavigate()
-  const { food_list, cardItems,url, removeFromCart, getTotalCartAmount} = useContext(StoreContext);
+  const { food_list, cartItems,url, removeFromCart, getTotalCartAmount} = useContext(StoreContext);
      
      let totalAmount = getTotalCartAmount() ? getTotalCartAmount() + 100 : 0;
 
@@ -22,13 +22,13 @@ const Cart = () => {
       <hr className='h-[0.15rem] mb-3  bg-slate-400' />
       <div className="space-y-4">
         {food_list.map((item) => {
-          if (cardItems[item._id] > 0) {
+          if (cartItems[item._id] > 0) {
             return (
               <div key={item._id} className="grid grid-cols-5 gap-14 p-3 pl-20 border-b bg-gray-200 rounded-lg items-center">
                 <img src={url+"/images/"+item.image} width={50} className="rounded-lg" alt={item.name} />
                 <h3 className="text-md font-normal text-gray-700">{item.name}</h3>
                 <h2 className="text-lg font-semibold text-gray-800 pl-5">Rs.{item.price}</h2>
-                <p className="text-sm text-gray-500 pl-10">{cardItems[item._id]}</p>
+                <p className="text-sm text-gray-500 pl-10">{cartItems[item._id]}</p>
                 <img className='pl-16' onClick={() => removeFromCart(item._id)} src={assets.cross_icon} alt="Remove" width={78} />
 
               </div>

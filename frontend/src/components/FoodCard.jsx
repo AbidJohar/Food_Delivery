@@ -8,22 +8,21 @@ const FoodCard = ({
     description,
     price,
     image,
-    className=''
 }) => {
 
      
-    const {addToCart, cardItems, removeFromCart,url} =useContext(StoreContext);
+    const {addToCart, cartItems, removeFromCart,url} =useContext(StoreContext);
 
 
     return (
         <div className={`foot-item w-[13.5rem] mb-8 hover:scale-105 transition-all duration-500  shadow-lg animate-fadeIn`}>
             <div className='img-container rounded-md overflow-hidden relative'>
                 <img src={url+"/images/"+image} />
-                {!cardItems[id] ?
+                {!cartItems[id] ?
                     <img className='absolute bottom-3 right-3 cursor-pointer' onClick={() => addToCart(id) } src={assets.add_icon_white} width={30} /> :
                     <div className='w-fit bg-black/65  rounded-full p-1 flex items-center justify-end mt-1 absolute bottom-3 right-3 cursor-pointer'>
                         <img onClick={() => addToCart(id)} src={assets.add_icon_green} width={25} />
-                        <p className='mx-1 font-bold text-white'>{cardItems[id]}</p>
+                        <p className='mx-1 font-bold text-white'>{cartItems[id]}</p>
                         <img onClick={() =>  removeFromCart(id)} src={assets.remove_icon_red} width={25} />
                     </div>
                 }

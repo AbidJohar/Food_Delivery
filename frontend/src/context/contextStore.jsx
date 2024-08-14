@@ -7,32 +7,39 @@ import axios from 'axios'
  const StoreContextProvider = (props)=>{
     const url = "http://localhost:4000";
   
-     const [cardItems, setCardItems] = useState({});
+     const [cartItems, setCartItems] = useState({});
       // for storing user token that is generated from server side
      const [token, setToken] = useState("");
      const [food_list, setFoodlist] = useState([]);
 
         // add to cart function
-      const addToCart = (itemid)=>{
-        console.log("itemid:",itemid);
+      const addToCart = async (itemId)=>{
         
-         if(!cardItems[itemid]){
-            setCardItems((prev)=>({...prev, [itemid]:1}))
-         } else{
-              setCardItems(prev=> ({...prev, [itemid]: prev[itemid]+1}));
+        if(!cartItems[itemId]){
+          setCartItems((prev)=>({...prev, [itemId]:1}))
+        } else{
+          setCartItems(prev=> ({...prev, [itemId]: prev[itemId]+1}));
+        }
+        if(token){
+           console.log("itemid:",itemId);
+          console.log("card item data:",cartItems[itemId]);
+          await axios.post(url+"/api/cart/add", {itemId},{headers:{token}})
          }
         
       }
-             // remover from cart function
-      const removeFromCart = (itemid)=>{
-           setCardItems(prev=> ({...prev, [itemid]:prev[itemid]-1}))
+             // remove from cart function
+      const removeFromCart = async (itemId)=>{
+           setCartItems(prev=> ({...prev, [itemId]:prev[itemId]-1}));
+           if(token){
+             await axios.post(url+"/api/cart/remove",{itemId},{headers:{token}});
+           }
       }
         // getTotalCartAmount function
        const getTotalCartAmount = ()=>{
          let totalAmount = 0;
-          for(const item in cardItems){
+          for(const item in cartItems){
               let cardInfo = food_list.find((food)=> food._id === item);
-                totalAmount += cardInfo.price * cardItems[item];
+                totalAmount += cardInfo.price * cartItems[item];
           }
           return totalAmount;
        }
@@ -49,11 +56,19 @@ import axios from 'axios'
          }
        };
 
+       // load cart data function
+        const loadCartData = async (token)=>{
+         const response = await axios.post(url+"/api/cart/get", {},{headers:{token}});
+               console.log("response :", response);
+              setCartItems(response.data.cartData);
+        }
+
        useEffect(()=>{
           async function loadData() {
            await  fetchFoodList();
              if(localStorage.getItem("token")){
                 setToken(localStorage.getItem("token"));
+               await loadCartData(localStorage.getItem("token"));
              }
             }
             loadData();
@@ -61,8 +76,8 @@ import axios from 'axios'
 
     const contextValue = {
             food_list,
-            cardItems,
-            setCardItems,
+            cartItems,
+            setCartItems,
             addToCart,
             removeFromCart,
             getTotalCartAmount,

@@ -4,6 +4,7 @@ import { connectDB } from './Config/db.js';
 import foodRouter from './Routes/foodRoute.js';
 import userRouter from './Routes/userRoute.js';
 import 'dotenv/config.js'
+import cartRouter from './Routes/cartRoute.js';
 
 
 // app configuration
@@ -22,6 +23,7 @@ app.use(cors());
  app.use('/api/food', foodRouter);
  app.use('/images', express.static('uploads'));
  app.use('/api/user', userRouter);
+ app.use('/api/cart',cartRouter);
 
 
 app.listen(port, ()=>{

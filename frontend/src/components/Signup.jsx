@@ -3,7 +3,6 @@ import { assets } from '../assets/assets';
 import axios from 'axios'
 import { useContext } from 'react';
 import { StoreContext } from '../context/contextStore';
-import {useNavigate} from 'react-router-dom'
 
 const Signup = ({setShowSignup}) => {
  const {url, token, setToken} = useContext(StoreContext);
