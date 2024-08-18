@@ -1,21 +1,41 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { assets } from '../assets/assets';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { StoreContext } from '../context/contextStore';
-import {useNavigate} from 'react-router-dom'
 
 const Navbar = ({ setShowSignup }) => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [menu, setMenu] = useState({ name: "home", url: '/' });
     const { getTotalCartAmount, token, setToken } = useContext(StoreContext);
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const dropdownRef = useRef(null);
+    const profileIconRef = useRef(null);
 
-    const logout = ()=>{
+
+    // to disapear the dropdown, when ever clicks on any point of the screen
+    const handleClickOutside = (event) => {
+  
+        if (
+            dropdownRef.current && !dropdownRef.current.contains(event.target) &&
+            profileIconRef.current && !profileIconRef.current.contains(event.target)
+        ) {
+            
+            setDropdownOpen(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    const logout = () => {
         localStorage.removeItem("token");
         setToken("");
         navigate('/');
-
-    }
+    };
 
     const navLinks = [
         { name: "home", url: '/' },
@@ -61,22 +81,22 @@ const Navbar = ({ setShowSignup }) => {
                     </div>
                 ) : (
                     <div className='relative'>
-                        <div className='ml-3'>
-                        <img 
-                            src={assets.profile_icon} 
-                            width={20} 
-                            className='cursor-pointer' 
-                            onClick={() => setDropdownOpen(!dropdownOpen)} 
-                        />
+                        <div className='ml-3' ref={profileIconRef}>
+                            <img
+                                src={assets.profile_icon}
+                                width={20}
+                                className='cursor-pointer'
+                                onClick={() => setDropdownOpen((prev) => !prev)}
+                            />
                         </div>
                         {dropdownOpen && (
-                            <div className='absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-md py-2 z-50'>
-                                <Link to="/profile" className='flex items-center gap-2 px-4 py-2 hover:bg-orange-200'>
+                            <div className='absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-md py-2 z-50' ref={dropdownRef}>
+                                <Link to="/myorders" className='flex items-center gap-2 px-4 py-2 hover:bg-orange-200'>
                                     <img src={assets.bag_icon} alt="Profile Icon" width={20} />
-                                    <span className='font-poppins'>Profile</span>
+                                    <span className='font-poppins'>Order</span>
                                 </Link>
                                 <div className='border-t border-gray-200'></div>
-                                <button 
+                                <button
                                     className='flex items-center gap-2 w-full text-left px-4 py-2 hover:bg-orange-200'
                                     onClick={logout}
                                 >

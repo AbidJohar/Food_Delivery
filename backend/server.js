@@ -5,6 +5,7 @@ import foodRouter from './Routes/foodRoute.js';
 import userRouter from './Routes/userRoute.js';
 import 'dotenv/config.js'
 import cartRouter from './Routes/cartRoute.js';
+import orderRouter from './Routes/orderRoute.js';
 
 
 // app configuration
@@ -24,6 +25,7 @@ app.use(cors());
  app.use('/images', express.static('uploads'));
  app.use('/api/user', userRouter);
  app.use('/api/cart',cartRouter);
+ app.use('/api/order', orderRouter);
 
 
 app.listen(port, ()=>{

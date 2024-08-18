@@ -11,6 +11,7 @@ const Cart = () => {
      let totalAmount = getTotalCartAmount() ? getTotalCartAmount() + 100 : 0;
 
   return (
+     
     <div className="mx-auto p-6 bg-white shadow-md rounded-lg">
       <div className='grid grid-cols-5   border-b'>
         <h2 className="text-center font-poppins font-bold">Item</h2>

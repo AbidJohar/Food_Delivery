@@ -19,7 +19,7 @@ import validator from 'validator';
         return res.json({success:false, message:"Invalid credientails"})
        }
        const token = createToken(user._id);
-       res.json({success:true, token});
+       res.json({success:true, token,message:"Successfully login"});
        } catch (error) {
           console.log("Error from loginuser:",error);
           return res.json({success:false, message:"Error"});
@@ -64,7 +64,7 @@ const registerUser = async (req, res)=>{
         });
         const user =  await newUser.save();
         const token = createToken(user._id);
-        res.json({success: true, token});
+        res.json({success: true, token, message:"Account created Successfully"});
         
       } catch (error) {
          console.log("Error from register user:",error);

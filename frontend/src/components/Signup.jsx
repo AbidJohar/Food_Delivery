@@ -3,8 +3,11 @@ import { assets } from '../assets/assets';
 import axios from 'axios'
 import { useContext } from 'react';
 import { StoreContext } from '../context/contextStore';
+import { useNavigate } from 'react-router-dom';
+import {toast} from 'react-toastify'
 
 const Signup = ({setShowSignup}) => {
+    const navigate = useNavigate();
  const {url, token, setToken} = useContext(StoreContext);
   const [curState, setCurState] = useState("Signup");
   const [userData, setUserData] = useState({
@@ -32,8 +35,9 @@ const Signup = ({setShowSignup}) => {
         setToken(response.data.token);
         localStorage.setItem("token", response.data.token);
         setShowSignup(false);
+        toast.success(response.data.message);
        }else{
-        alert(response.data.message);
+        toast.error(response.data.message);
        }
 
   }
