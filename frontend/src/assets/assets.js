@@ -108,7 +108,7 @@ export const menu_list = [
         menu_image: menu_5
     },
     {
-        menu_name: "Pure Veg",
+        menu_name: "PureVeg",
         menu_image: menu_6
     },
     {
@@ -270,28 +270,28 @@ export const food_list = [
         image: food_21,
         price: 140,
         description: "Food provides essential nutrients for overall health and well-being",
-        category: "Pure Veg"
+        category: "PureVeg"
     }, {
         _id: "22",
         name: "Fried Cauliflower",
         image: food_22,
         price: 220,
         description: "Food provides essential nutrients for overall health and well-being",
-        category: "Pure Veg"
+        category: "PureVeg"
     }, {
         _id: "23",
         name: "Mix Veg Pulao",
         image: food_23,
         price: 100,
         description: "Food provides essential nutrients for overall health and well-being",
-        category: "Pure Veg"
+        category: "PureVeg"
     }, {
         _id: "24",
         name: "Rice Zucchini",
         image: food_24,
         price: 120,
         description: "Food provides essential nutrients for overall health and well-being",
-        category: "Pure Veg"
+        category: "PureVeg"
     },
     {
         _id: "25",
@@ -324,7 +324,7 @@ export const food_list = [
         category: "Pasta"
     }, {
         _id: "29",
-        name: "Buttter Noodles",
+        name: "Butter Noodles",
         image: food_29,
         price: 140,
         description: "Food provides essential nutrients for overall health and well-being",

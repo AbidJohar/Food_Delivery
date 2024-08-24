@@ -64,7 +64,7 @@ const Navbar = ({ setShowSignup }) => {
                 </ul>
             </div>
             <div className='flex items-center gap-3'>
-                <img src={assets.search_icon} alt="Search Icon" width={20} />
+                {/* <img src={assets.search_icon} alt="Search Icon" width={20} /> */}
                 <div className='relative flex items-center gap-3'>
                     <Link to={'/cart'}>
                         <img src={assets.basket_icon} alt="Basket Icon" width={20} />

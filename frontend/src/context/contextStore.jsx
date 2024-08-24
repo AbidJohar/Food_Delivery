@@ -11,6 +11,7 @@ import axios from 'axios'
       // for storing user token that is generated from server side
      const [token, setToken] = useState("");
      const [food_list, setFoodlist] = useState([]);
+     const [search, setSearch] = useState('');
 
         // add to cart function
       const addToCart = async (itemId)=>{
@@ -47,7 +48,9 @@ import axios from 'axios'
        // fetch food list function
        const fetchFoodList = async () => {
          try {
-           const response = await axios.get(`${url}/api/food/foodlist`);
+          console.log("search from context:",search);
+          
+           const response = await axios.get(`${url}/api/food/foodlist?search=`+search);
            if (response.data.success) {
              setFoodlist(response.data.data);
            }
@@ -72,7 +75,7 @@ import axios from 'axios'
              }
             }
             loadData();
-       },[])
+       },[search])
 
     const contextValue = {
             food_list,
@@ -83,7 +86,9 @@ import axios from 'axios'
             getTotalCartAmount,
             url,
             token,
-            setToken
+            setToken,
+            setSearch,
+            search
     }
     return (
         <StoreContext.Provider value={contextValue}>

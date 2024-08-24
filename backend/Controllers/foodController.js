@@ -29,6 +29,16 @@ import fs from 'fs'
  const foodList = async (req, res)=>{
 
     try {
+     if(req.query.search){
+           const foods = await foodModel.find({});
+           const searchQuery = req.query.search.toLowerCase();
+         const filterFoods =   foods.filter(food=>(
+           food.name.toLowerCase().includes(searchQuery)
+          ));
+          res.json({success:true, data:filterFoods});
+          return;
+     }
+
          const foods = await foodModel.find({});
          res.json({success:true, data:foods});
     } catch (error) {
