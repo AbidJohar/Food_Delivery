@@ -4,6 +4,8 @@ import userModel from '../Models/userModel.js'
  // add to cart function
 
  const addToCart = async (req,res)=>{
+      console.log("Add to Cart endpoint is hitting...");
+      
          try {
             let userData = await userModel.findOne({_id:req.body.userId}); // findbyId(req.body.userId);
             let cartData = await userData.cartData;
@@ -49,7 +51,9 @@ import userModel from '../Models/userModel.js'
 
  const getData = async (req,res)=>{
 
-    try {
+    try { 
+        console.log("req userid:",req.body.userId);
+        
         const userData = await userModel.findById(req.body.userId);
         const cartData = userData.cartData;
 

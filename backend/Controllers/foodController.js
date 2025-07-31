@@ -28,23 +28,43 @@ import fs from 'fs'
 
  const foodList = async (req, res)=>{
 
+      console.log("foodlist endpoint is  hitting...");
     try {
-     if(req.query.search){
-           const foods = await foodModel.find({});
-           const searchQuery = req.query.search.toLowerCase();
-         const filterFoods =   foods.filter(food=>(
-           food.name.toLowerCase().includes(searchQuery)
-          ));
-          res.json({success:true, data:filterFoods});
-          return;
-     }
-
+        
+       
          const foods = await foodModel.find({});
-         res.json({success:true, data:foods});
+       return   res.json({success:true, data:foods});
     } catch (error) {
          res.json({success:false, message:"Error"});
     }
  }
+
+ // Food search query function
+
+ const searchQuery = async (req, res) => {
+  console.log("search query endpoint is hitting...");
+
+  try {
+    const searchTerm = req.query.search;
+    console.log("req search:", searchTerm);
+
+    if (!searchTerm) {
+      return res.status(400).json({ success: false, message: "Search query is required" });
+    }
+
+    // Using case-insensitive regex for filtering directly in MongoDB
+    const filterFoods = await foodModel.find({
+      name: { $regex: searchTerm, $options: "i" } // "i" for case-insensitive
+    });
+
+    return res.json({ success: true, data: filterFoods });
+
+  } catch (error) {
+    console.error("Search error:", error);
+    return res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};
+
 
  // delete food function
 
@@ -62,4 +82,4 @@ import fs from 'fs'
     }
  }
 
- export {addFood, foodList, removeFood}
+ export {addFood, foodList, removeFood,searchQuery}
